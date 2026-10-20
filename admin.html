@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - PrimeCure Pharma ERP</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <!-- Admin Header -->
+    <header class="top-header">
+        <div class="contact-info">
+            <span>⚙️ PrimeCure Pharma Management System</span>
+        </div>
+        <div class="tagline-top">
+            <span>Welcome, Rashid Hayat (Ahmedabad)</span>
+        </div>
+    </header>
+
+    <!-- Admin Navigation Tabs -->
+    <div class="admin-tabs-bar">
+        <button class="tab-btn active" onclick="switchTab('manufacturerTab', this)">🏢 Manage Manufacturer</button>
+        <button class="tab-btn" onclick="switchTab('productTab', this)">💊 Manage Product</button>
+        <button class="tab-btn" onclick="switchTab('purchaseTab', this)">📦 Manage Purchase & Enquiry</button>
+        <button class="tab-btn" onclick="switchTab('schemeCalcTab', this)">🎁 Scheme & Profit Calculator</button>
+        <a href="index.html" class="tab-btn home-link-btn" style="text-decoration: none;">🌐 View Live Website</a>
+    </div>
+
+    <!-- Main Container -->
+    <main class="admin-container">
+
+        <!---------------- TAB 1: MANAGE MANUFACTURER ---------------->
+        <div id="manufacturerTab" class="tab-content active-tab">
+            <h2>Manufacturer / Factory Directory</h2>
+            <p class="admin-subtitle">Add and manage third-party manufacturing units linked to your product catalog and enquiries.</p>
+            
+            <div class="admin-card">
+                <h3>Add New Manufacturer</h3>
+                <form id="manufacturerForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Factory / Company Name:</label>
+                            <input type="text" id="mfgName" placeholder="e.g., Apex Formulation Pvt. Ltd." required>
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Person Name:</label>
+                            <input type="text" id="mfgPerson" placeholder="e.g., Mr. Rajesh Kumar" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Email ID:</label>
+                            <input type="email" id="mfgEmail" placeholder="factory@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Mobile Number:</label>
+                            <input type="text" id="mfgMobile" placeholder="+91 9876543210" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="explore-btn pcd-btn" style="width: 100%; justify-content: center; border: none; cursor: pointer;">Save Manufacturer</button>
+                </form>
+            </div>
+
+            <div class="admin-card" style="margin-top: 30px;">
+                <h3>Registered Manufacturers List</h3>
+                <div id="manufacturerListContainer" style="margin-top: 15px;">
+                    <p style="color: #777;">No manufacturers added yet.</p>
+                </div>
+            </div>
+        </div>
+
+        <!---------------- TAB 2: MANAGE PRODUCT ---------------->
+        <div id="productTab" class="tab-content">
+            <h2>Product Catalog & Pricing Management</h2>
+            <p class="admin-subtitle">Manage all pharmaceutical formulations, dosages, pricing, and download lists.</p>
+            
+            <!-- Top Action Buttons for Lists & Downloads -->
+            <div class="download-actions-bar">
+                <button class="explore-btn pcd-btn" onclick="downloadProductList()" style="font-size: 14px; padding: 10px 20px;">📥 Download Product List (Public)</button>
+                <button class="explore-btn thirdparty-btn" onclick="downloadPriceList()" style="font-size: 14px; padding: 10px 20px;">🔒 Download Price List (Private)</button>
+                <button class="explore-btn pcd-btn" onclick="downloadThirdPartyList()" style="font-size: 14px; padding: 10px 20px; background-color: #3d0312;">📄 Download Third-Party List (Molecules)</button>
+            </div>
+
+            <!-- Toggle Form Button -->
+            <div style="margin: 20px 0; text-align: right;">
+                <button class="explore-btn pcd-btn" onclick="toggleProductForm()" id="toggleFormBtn" style="font-size: 14px; display: inline-flex;">+ Add New Product</button>
+            </div>
+
+            <!-- Add Product Form -->
+            <div class="admin-card" id="productFormCard" style="display: none; margin-bottom: 30px;">
+                <h3>Add New Product (Auto Code: <span id="autoProductCode" style="color: #d4af37;">PC-0001</span>)</h3>
+                <form id="productForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Segment / Therapeutic Category:</label>
+                            <select id="prodSegment" required>
+                                <option value="">Select Segment</option>
+                                <option value="ANTIBACTERIAL/ANTIMICROBIAL/ANTIDIARHOEALS/G.I.ANTIINFECTIONS">1. ANTIBACTERIAL/ANTIMICROBIAL/ANTIDIARHOEALS/G.I.ANTIINFECTIONS</option>
+                                <option value="ANTI-HYPERACIDITY / REFLUX / ULCERS">2. ANTI-HYPERACIDITY / REFLUX / ULCERS</option>
+                                <option value="ANDROGENS AND ANABOLIC STEROIDS">3. ANDROGENS AND ANABOLIC STEROIDS</option>
+                                <option value="NSAIDS/ANTI-RHEUMATOID/SPASMODIC">4. NSAIDS/ANTI-RHEUMATOID/SPASMODIC</option>
+                                <option value="NUTRITION & METABOLISM/HEAMATOPOIETIC/MINERALS/VITAMINS">5. NUTRITION & METABOLISM/HEAMATOPOIETIC/MINERALS/VITAMINS</option>
+                                <option value="ENZYMES/DIGESTIVE SUPPLEMENTS">6. ENZYMES/DIGESTIVE SUPPLEMENTS</option>
+                                <option value="HAEMOSTATICS">7. HAEMOSTATICS</option>
+                                <option value="ANTICOLD/ANTIASTHMATICS/MUCOLYTICS/EXPECTORANTS">8. ANTICOLD/ANTIASTHMATICS/MUCOLYTICS/EXPECTORANTS</option>
+                                <option value="ANTIALLERGIC DRUGS">9. ANTIALLERGIC DRUGS</option>
+                                <option value="ANTHELMINTICS">10. ANTHELMINTICS</option>
+                                <option value="AYURVEDIC DRUGS">11. AYURVEDIC DRUGS</option>
+                                <option value="ANTIFUNGAL/ SKIN RANGE/DENTAL RANGE">12. ANTIFUNGAL/ SKIN RANGE/DENTAL RANGE</option>
+                                <option value="PSYCHIATRIC- DIVISION">13. PSYCHIATRIC- DIVISION</option>
+                                <option value="CARDIAC & DIABETIC">14. CARDIAC & DIABETIC</option>
+                                <option value="OPHTHALMIC">15. OPHTHALMIC</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>List Type:</label>
+                            <select id="prodListType" required>
+                                <option value="PCD">PCD Product List</option>
+                                <option value="ThirdParty">Third-Party Manufacturing List</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Brand Name:</label>
+                            <input type="text" id="prodBrandName" placeholder="e.g., PrimeCure-CV 625" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Composition / Molecule:</label>
+                            <input type="text" id="prodComposition" placeholder="e.g., Amoxycillin 500mg + Clavulanate Potassium 125mg" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Formulation / Dosage Form:</label>
+                            <select id="prodFormulation" required>
+                                <option value="Tablet">Tablet</option>
+                                <option value="Capsule">Capsule</option>
+                                <option value="Softgel">Softgel</option>
+                                <option value="Dry Injection">Dry Injection</option>
+                                <option value="Liquid Injection">Liquid Injection</option>
+                                <option value="Syrup">Syrup</option>
+                                <option value="Dry Syrup">Dry Syrup</option>
+                                <option value="Suspension">Suspension</option>
+                                <option value="Ointment">Ointment</option>
+                                <option value="Cream">Cream</option>
+                                <option value="Gel">Gel</option>
+                                <option value="Powder">Powder</option>
+                                <option value="Granules">Granules</option>
+                                <option value="Drops">Drops</option>
+                                <option value="Gummy">Gummy</option>
+                                <option value="Mouth Paint">Mouth Paint</option>
+                                <option value="Mouthwash">Mouthwash</option>
+                                <option value="Roll On">Roll On</option>
+                                <option value="Toothpaste">Toothpaste</option>
+                                <option value="Nasal Spray">Nasal Spray</option>
+                                <option value="Nasal Sprays & Drops">Nasal Sprays & Drops</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Packing Type (e.g., Alu-Alu / Blister):</label>
+                            <input type="text" id="prodPacking" placeholder="e.g., 10x10 Alu-Alu" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Pack Size (e.g., 10's):</label>
+                            <input type="text" id="prodPackSize" placeholder="e.g., 10 Tablets" required>
+                        </div>
+                        <div class="form-group">
+                            <label>MRP (₹):</label>
+                            <input type="number" step="0.01" id="prodMrp" placeholder="150.00" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Rate / Distributor Price (₹):</label>
+                            <input type="number" step="0.01" id="prodRate" placeholder="85.00" required>
+                        </div>
+                        <div class="form-group">
+                            <label>HSN Code:</label>
+                            <input type="text" id="prodHsn" placeholder="e.g., 3004" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tax Rate (GST %):</label>
+                            <select id="prodTax" required>
+                                <option value="12%">12% GST</option>
+                                <option value="18%">18% GST</option>
+                                <option value="5%">5% GST</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Stock Status:</label>
+                            <select id="prodStock" required>
+                                <option value="In Stock">In Stock</option>
+                                <option value="Out of Stock">Out of Stock</option>
+                                <option value="Made to Order">Made to Order</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Linked Manufacturer:</label>
+                            <select id="prodManufacturer" required>
+                                <option value="">Select Manufacturer</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Product Image Upload:</label>
+                            <input type="file" id="prodImageFile" accept="image/*">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Product Visual Aid Upload:</label>
+                            <input type="file" id="prodVisualFile" accept="image/*,application/pdf">
+                        </div>
+                        <div class="form-group">
+                            <label>Offer Banner Upload (1536x500):</label>
+                            <input type="file" id="prodBannerFile" accept="image/*">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="explore-btn pcd-btn" style="width: 100%; justify-content: center; border: none; cursor: pointer; margin-top: 15px;">Save Product to Database</button>
+                </form>
+            </div>
+
+            <!-- Existing Products List Display Box with Search Bar -->
+            <div class="admin-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">
+                    <h3 style="margin: 0;">Product Inventory Catalog</h3>
+                    <div style="min-width: 280px;">
+                        <input type="text" id="productSearchInput" onkeyup="filterAdminProductCatalog()" placeholder="🔍 Search product by brand, code, composition..." style="width: 100%; padding: 8px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;">
+                    </div>
+                </div>
+                <div id="adminProductCatalogList" style="overflow-x: auto;">
+                    <p style="color: #777;">No products added yet.</p>
+                </div>
+            </div>
+        </div>
+
+        <!---------------- TAB 3: MANAGE PURCHASE & ENQUIRY ---------------->
+        <div id="purchaseTab" class="tab-content">
+            <h2>Purchase & Factory Enquiries</h2>
+            <p class="admin-subtitle">Send rate enquiries to manufacturers (via info.primecurepharma@gmail.com) and generate comparison sheets.</p>
+            
+            <div class="admin-card">
+                <h3>Send Enquiry to Manufacturer</h3>
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label>Select Enquiry Mode:</label>
+                    <select id="enquiryMode" onchange="toggleEnquiryMode()">
+                        <option value="multipleProduct">1. Multiple Products to Single Manufacturer</option>
+                        <option value="singleProduct">2. Single Product to Multiple Manufacturers</option>
+                    </select>
+                </div>
+
+                <!-- Mode 1 Container -->
+                <div id="mode1Container" class="enquiry-sub-box">
+                    <div class="form-group">
+                        <label>Select Manufacturer (Filtered by Alphabet):</label>
+                        <select id="enquiryMfgSelect">
+                            <option value="">Select Manufacturer</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Products to Include:</label>
+                        <div id="checkboxProductList" style="max-height: 180px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; border-radius: 6px; background: #fff;">
+                        </div>
+                    </div>
+                    <button type="button" class="explore-btn pcd-btn" onclick="sendMultiProductEnquiry()" style="border: none; cursor: pointer;">Send Enquiry Mail ✉️</button>
+                </div>
+
+                <!-- Mode 2 Container -->
+                <div id="mode2Container" class="enquiry-sub-box" style="display: none;">
+                    <div class="form-group">
+                        <label>Select Product:</label>
+                        <select id="enquiryProductSelect" onchange="loadLinkedManufacturersForProduct()">
+                            <option value="">Select Product</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Linked Manufacturers for this Product:</label>
+                        <div id="checkboxMfgList" style="max-height: 180px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; border-radius: 6px; background: #fff;">
+                        </div>
+                    </div>
+                    <button type="button" class="explore-btn pcd-btn" onclick="sendSingleProductEnquiry()" style="border: none; cursor: pointer;">Send Enquiry Mail ✉️</button>
+                </div>
+            </div>
+
+            <!-- Comparison Sheet Section -->
+            <div class="admin-card" style="margin-top: 30px;">
+                <h3>Comparison Sheet & Sent Enquiries Log</h3>
+                <div id="comparisonLogContainer" style="margin-top: 15px;">
+                    <p style="color: #777;">No enquiry logs or comparison sheets generated yet.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 4: SCHEME & COSTING CALCULATOR TAB (PRO VER 2.5) ================= -->
+        <div id="schemeCalcTab" class="tab-content">
+            <div style="background: linear-gradient(135deg, #002b5b 0%, #005b96 100%); color: white; padding: 20px 25px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,43,91,0.2);">
+                <h2 style="margin: 0 0 5px 0; color: #fff; font-size: 24px; display: flex; align-items: center; gap: 10px;">🎁 Scheme, Profit Margin & Gift Calculator <span style="font-size: 12px; background: #d4af37; color: #000; padding: 3px 8px; border-radius: 20px; font-weight: bold;">PRO v2.5</span></h2>
+                <p style="margin: 0; opacity: 0.9; font-size: 13px;">Landed costing, overheads, freight, gift budget suggestions, post-gift net profit margins calculate karein aur editable visual offer sheets generate karein.</p>
+            </div>
+
+            <div class="admin-card" style="border-top: 4px solid #005b96; border-radius: 10px; padding: 25px; background: #ffffff; box-shadow: 0 6px 20px rgba(0,0,0,0.06);">
+                <form id="schemeCalcForm" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px;">
+                    
+                    <!-- Section 1: Product & Orders -->
+                    <div style="grid-column: 1 / -1; background: #f8fafc; padding: 10px 15px; border-radius: 6px; font-weight: bold; color: #002b5b; border-left: 4px solid #002b5b;">
+                        📦 1. Product & Basic Order Details
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-weight: 600; color: #333;">Select Product:</label>
+                        <select id="calcProductSelect" class="input-field" onchange="loadProductCalcDetails()" style="padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; width: 100%; font-size: 14px;" required>
+                            <option value="">-- Choose Product --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-weight: 600; color: #333;">Order Qty (Boxes/Units):</label>
+                        <input type="number" id="calcOrderQty" value="100" class="input-field" oninput="calculateSchemeProfit()" style="padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; width: 100%; font-size: 14px;" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-weight: 600; color: #333;">Purchase Rate / Unit (₹):</label>
+                        <input type="number" step="0.01" id="calcPurchaseRate" class="input-field" placeholder="Enter purchase rate" oninput="calculateSchemeProfit()" style="padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; width: 100%; font-size: 14px;" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-weight: 600; color: #333;">Selling Rate / Unit (₹) [Price List]:</label>
+                        <input type="number" step="0.01" id="calcSellingRate" class="input-field" placeholder="Auto fetched or manual" oninput="calculateSchemeProfit()" style="padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; width: 100%; font-size: 14px;" required>
+                    </div>
+
+                    <!-- Section 2: Overheads & Freight -->
+                    <div style="grid-column: 1 / -1; background: #f8fafc; padding: 10px 15px; border-radius: 6px; font-weight: bold; color: #002b5b; border-left: 4px solid #002b5b; margin-top: 10px;">
+                        🚚 2. Overheads, Cylinder Setup & Freight
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-weight: 600; color: #333;">Batch Size / MOQ (For Setup Split):</label>
+                        <input type="number" id="calcBatchQty" value="5000" class="input-field" oninput="calculateSchemeProfit()" style="padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; width: 100%; font-size: 14px;">
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-weight: 600; color: #333;">One-Time Setup (Cylinder/Plate ₹):</label>
+                        <input type="number" id="calcOneTimeCharges" value="0" class="input-field" oninput="calculateSchemeProfit()" style="padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; width: 100%; font-size: 14px;">
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-weight: 600; color: #333;">Total Cartons:</label>
+                        <input type="number" id="calcCartonCount" value="5" class="input-field" oninput="calculateSchemeProfit()" style="padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; width: 100%; font-size: 14px;">
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-weight: 600; color: #333;">Freight Rate / Carton (₹):</label>
+                        <input type="number" id="calcFreightPerCarton" value="100" class="input-field" oninput="calculateSchemeProfit()" style="padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; width: 100%; font-size: 14px;">
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-weight: 600; color: #333;">Bilty Charges (₹):</label>
+                        <input type="number" id="calcBiltyCharges" value="100" class="input-field" oninput="calculateSchemeProfit()" style="padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; width: 100%; font-size: 14px;">
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-weight: 600; color: #333;">Client Outward Freight Allowance (%):</label>
+                        <input type="number" step="0.1" id="calcOutwardFreightPct" value="2.0" class="input-field" oninput="calculateSchemeProfit()" style="padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; width: 100%; font-size: 14px;">
+                    </div>
+
+                    <!-- Section 3: Gift Scheme & Image Upload -->
+                    <div style="grid-column: 1 / -1; background: #f8fafc; padding: 10px 15px; border-radius: 6px; font-weight: bold; color: #002b5b; border-left: 4px solid #002b5b; margin-top: 10px;">
+                        🎯 3. Decided Gift Scheme & Photo Upload
+                    </div>
+
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label style="font-weight: 600; color: #333;">Decided Scheme / Gift Offer Item Name:</label>
+                        <input type="text" id="calcGiftItem" placeholder="e.g. SAFARI Large Check-in Suitcase (77 cm) 8 Wheels - Persia - Green" class="input-field" style="padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; width: 100%; font-size: 14px;">
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-weight: 600; color: #b30000;">Gift Cost / Item Value (₹):</label>
+                        <input type="number" id="calcGiftCost" value="0" placeholder="Enter actual gift cost" class="input-field" oninput="calculateSchemeProfit()" style="padding: 10px; border-radius: 6px; border: 2px solid #b30000; width: 100%; font-size: 14px; font-weight: bold; background: #fff8f8;">
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-weight: 600; color: #333;">Upload Gift Item Image:</label>
+                        <input type="file" id="calcGiftImageFile" accept="image/*" onchange="previewGiftImage(this)" style="padding: 7px; border-radius: 6px; border: 1px solid #cbd5e1; width: 100%; font-size: 13px;">
+                    </div>
+
+                    <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                        <div id="giftImagePreviewBox" style="width: 70px; height: 70px; border: 2px dashed #cbd5e1; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: #fafafa; overflow: hidden;">
+                            <span style="font-size: 10px; color: #aaa; text-align: center;">No Image</span>
+                        </div>
+                        <span style="font-size: 12px; color: #666;">Will render inside PDF/Print sheets.</span>
+                    </div>
+
+                </form>
+
+                <!-- Dynamic Pro Results Summary Dashboard -->
+                <div id="calcResultBox" style="background: #f1f5f9; padding: 20px; border-radius: 10px; margin-top: 25px; border: 1px solid #e2e8f0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #cbd5e1; padding-bottom: 10px; margin-bottom: 15px;">
+                        <h4 style="margin: 0; color: #002b5b; font-size: 18px; font-weight: 700;">📊 Live Dynamic Costing & Margin Engine</h4>
+                        <span style="font-size: 12px; color: #005b96; background: #e0f2fe; padding: 4px 10px; border-radius: 15px; font-weight: 600;">Auto Calculated</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <div style="background: white; padding: 12px 15px; border-radius: 8px; border-left: 4px solid #005b96; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
+                            <span style="font-size: 12px; color: #64748b; font-weight: 600;">TOTAL SALES REVENUE</span><br>
+                            <strong id="resTotalSales" style="color:#002b5b; font-size: 18px;">₹0.00</strong>
+                        </div>
+
+                        <div style="background: white; padding: 12px 15px; border-radius: 8px; border-left: 4px solid #64748b; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
+                            <span style="font-size: 12px; color: #64748b; font-weight: 600;">LANDED COST PER UNIT</span><br>
+                            <strong id="resLandedCost" style="color: #334155; font-size: 16px;">₹0.00 / unit</strong>
+                        </div>
+
+                        <div style="background: white; padding: 12px 15px; border-radius: 8px; border-left: 4px solid #0284c7; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
+                            <span style="font-size: 12px; color: #64748b; font-weight: 600;">TOTAL INVESTMENT COST</span><br>
+                            <strong id="resTotalInvestment" style="color: #334155; font-size: 16px;">₹0.00</strong>
+                        </div>
+
+                        <div style="background: white; padding: 12px 15px; border-radius: 8px; border-left: 4px solid #d97706; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
+                            <span style="font-size: 12px; color: #64748b; font-weight: 600;">💡 SUGGESTED MAX GIFT BUDGET</span><br>
+                            <strong id="resGiftBudgetSuggest" style="color: #d97706; font-size: 16px;">₹0.00 (Safe Budget)</strong>
+                        </div>
+
+                        <div style="background: white; padding: 12px 15px; border-radius: 8px; border-left: 4px solid #16a34a; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
+                            <span style="font-size: 12px; color: #64748b; font-weight: 600;">GROSS PROFIT (BEFORE GIFT)</span><br>
+                            <strong id="resGrossProfit" style="color: #16a34a; font-size: 17px;">₹0.00</strong>
+                        </div>
+
+                        <div style="background: #f0fdf4; padding: 12px 15px; border-radius: 8px; border-left: 4px solid #15803d; box-shadow: 0 2px 5px rgba(0,0,0,0.05); grid-column: 1 / -1;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                                <div>
+                                    <span style="font-size: 12px; color: #15803d; font-weight: bold; text-transform: uppercase;">🔥 ACTUAL NET PROFIT (AFTER GIFT DEDUCTION)</span><br>
+                                    <strong id="resNetProfit" style="color: #15803d; font-size: 22px;">₹0.00</strong>
+                                </div>
+                                <div style="text-align: right;">
+                                    <span style="font-size: 12px; color: #15803d; font-weight: bold; text-transform: uppercase;">FINAL PROFIT MARGIN %</span><br>
+                                    <strong id="resMarginPct" style="color: #15803d; font-size: 22px;">0.00%</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end;">
+                    <button type="button" onclick="saveSchemeCalculation()" style="background: #16a34a; color: white; border: none; padding: 12px 22px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 3px 10px rgba(22,163,74,0.25);">💾 Save Scheme Entry</button>
+                    <button type="button" onclick="generateOwnerConfidentialSheet()" style="background: #dc2626; color: white; border: none; padding: 12px 22px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 3px 10px rgba(220,38,38,0.25);">📄 Print Confidential Owner Sheet</button>
+                    <button type="button" onclick="generateClientPublicSchemeSheet()" style="background: #0284c7; color: white; border: none; padding: 12px 22px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 3px 10px rgba(2,132,199,0.25);">📜 Download Client Scheme Sheet</button>
+                </div>
+            </div>
+
+            <!-- SAVED SCHEME ENTRIES LIST WITH EDIT & DELETE -->
+            <div class="admin-card" style="margin-top: 30px; border-radius: 10px; padding: 25px; background: #ffffff; box-shadow: 0 6px 20px rgba(0,0,0,0.06);">
+                <h3 style="color: #002b5b; margin-top: 0;">📋 Saved Scheme Entries Management</h3>
+                <p style="color: #64748b; font-size: 13px; margin-bottom: 20px;">Manage, Edit, or Delete saved gift schemes.</p>
+                <div id="savedSchemeListContainer" style="overflow-x: auto;">
+                    <p style="color: #777;">No saved schemes yet.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="admin.js"></script>
+</body>
+</html>

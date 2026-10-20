@@ -1,0 +1,205 @@
+/* Admin Dashboard Specific Styles */
+.admin-container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.tagline-top {
+    font-size: 14px;
+    color: #d4af37;
+}
+
+/* Tabs Bar Styling */
+.admin-tabs-bar {
+    background-color: #5c061c;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px 5%;
+    flex-wrap: wrap;
+    border-bottom: 3px solid #d4af37;
+}
+
+.tab-btn {
+    background-color: transparent;
+    color: #ffffff;
+    border: 2px solid #d4af37;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover, .tab-btn.active {
+    background-color: #d4af37;
+    color: #3d0312;
+}
+
+.home-link-btn {
+    background-color: #3d0312;
+    border-color: #ffffff;
+}
+
+/* Tab Content Visibility */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active-tab {
+    display: block;
+    animation: fadeInTab 0.4s ease-in-out;
+}
+
+@keyframes fadeInTab {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.admin-container h2 {
+    color: #5c061c;
+    font-size: 26px;
+    margin-bottom: 5px;
+}
+
+.admin-subtitle {
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+.admin-card {
+    background: #ffffff;
+    border: 2px solid #d4af37;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 6px 20px rgba(92, 6, 28, 0.08);
+}
+
+.admin-card h3 {
+    color: #5c061c;
+    margin-bottom: 20px;
+    font-size: 18px;
+    border-bottom: 2px solid #f8f5f0;
+    padding-bottom: 10px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.form-row .form-group {
+    flex: 1;
+    min-width: 250px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    color: #333;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #fcfbfa;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #5c061c;
+    background-color: #fff;
+}
+
+.download-actions-bar {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.table-style {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.table-style th, .table-style td {
+    border: 1px solid #e2d4bc;
+    padding: 10px;
+    text-align: left;
+}
+
+.table-style th {
+    background-color: #5c061c;
+    color: white;
+}
+
+.table-style tr:nth-child(even) {
+    background-color: #fcfbfa;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.delete-btn:hover {
+    background-color: #b02a37;
+}
+
+.enquiry-sub-box {
+    background: #fdfbf7;
+    border: 1px dashed #d4af37;
+    padding: 20px;
+    border-radius: 8px;
+}
+/* Action Buttons Styling (View, Edit, Delete) */
+.action-btn {
+    border: none;
+    padding: 5px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 3px;
+}
+
+.view-btn {
+    background-color: #17a2b8;
+    color: white;
+}
+.view-btn:hover {
+    background-color: #138496;
+}
+
+.edit-btn {
+    background-color: #ffc107;
+    color: #333;
+}
+.edit-btn:hover {
+    background-color: #e0a800;
+}
