@@ -1,3 +1,18 @@
+<script>
+(function() {
+    const ADMIN_PASSWORD = "Veraamax@2026";
+    if (sessionStorage.getItem('vmax_admin_auth') !== 'true') {
+        let userPass = prompt("🔐 PrimeCure Pharma ERP Security:\nPlease enter Admin Password:");
+        if (userPass === ADMIN_PASSWORD) {
+            sessionStorage.setItem('vmax_admin_auth', 'true');
+            alert("✅ Access Granted!");
+        } else {
+            alert("❌ Incorrect Password!");
+            window.location.href = "index.html";
+        }
+    }
+})();
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -460,22 +475,12 @@
                 <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end;">
                     <button type="button" onclick="saveSchemeCalculation()" style="background: #16a34a; color: white; border: none; padding: 12px 22px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 3px 10px rgba(22,163,74,0.25);">💾 Save Scheme Entry</button>
                     <button type="button" onclick="generateOwnerConfidentialSheet()" style="background: #dc2626; color: white; border: none; padding: 12px 22px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 3px 10px rgba(220,38,38,0.25);">📄 Print Confidential Owner Sheet</button>
-                    <button type="button" onclick="generateClientPublicSchemeSheet()" style="background: #0284c7; color: white; border: none; padding: 12px 22px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 3px 10px rgba(2,132,199,0.25);">📜 Download Client Scheme Sheet</button>
-                </div>
-            </div>
-
-            <!-- SAVED SCHEME ENTRIES LIST WITH EDIT & DELETE -->
-            <div class="admin-card" style="margin-top: 30px; border-radius: 10px; padding: 25px; background: #ffffff; box-shadow: 0 6px 20px rgba(0,0,0,0.06);">
-                <h3 style="color: #002b5b; margin-top: 0;">📋 Saved Scheme Entries Management</h3>
-                <p style="color: #64748b; font-size: 13px; margin-bottom: 20px;">Manage, Edit, or Delete saved gift schemes.</p>
-                <div id="savedSchemeListContainer" style="overflow-x: auto;">
-                    <p style="color: #777;">No saved schemes yet.</p>
                 </div>
             </div>
         </div>
-
     </main>
 
+    <script src="script.js"></script>
     <script src="admin.js"></script>
 </body>
 </html>
